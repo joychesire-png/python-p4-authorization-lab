@@ -35,18 +35,21 @@ with app.app_context():
 
     print("Creating articles...")
     articles = []
-    for i in range(100):
+    for i in range(99):
         content = fake.paragraph(nb_sentences=8)
         preview = content[:25] + '...'
         
+        # Ensure first article is member-only for testing purposes
+        is_member = True if i == 0 else rc([True, False, False])
+        
         article = Article(
-            author=fake.name(),
-            title=fake.sentence(),
-            content=content,
-            preview=preview,
-            minutes_to_read=randint(1,20),
-            is_member_only = rc([True, False, False])
-        )
+        author=fake.name(),
+        title=fake.sentence(),
+        content=content,
+        preview=preview,
+        minutes_to_read=randint(1,20),
+        is_member_only = is_member
+    )
 
         articles.append(article)
 
